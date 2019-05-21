@@ -14,14 +14,20 @@ turn = "w"
 def menu_screen(win):
     global bo
     run = True
+    offline = False
 
     while run:
         win.fill((128,128,128))
         font = pygame.font.SysFont("comicsans", 80)
+        small_font = pygame.font.SysFont("comicsans", 50)
         title = font.render("Online Chess!", 1, (0,200,0))
         join = font.render("Click To Join a Game!", 1, (0, 128, 0))
         win.blit(title, (width/2 - title.get_width()/2, 200))
         win.blit(join, (width / 2 - join.get_width() / 2, 400))
+        if offline:
+            off = small_font.render("Server Offline, Try Again Later...", 1, (255, 0, 0))
+            win.blit(off, (width / 2 - off.get_width() / 2, 600))
+
         pygame.display.update()
 
         for event in pygame.event.get():
@@ -30,16 +36,18 @@ def menu_screen(win):
                 run = False
 
             if event.type == pygame.MOUSEBUTTONDOWN:
-                run = False
+                offline = False
+                try:
+                    bo = connect()
+                    run = False
+                    main()
+                    break
+                except:
+                    print("Server Offline")
+                    offline = True
 
-    while True:
-        try:
-            bo = connect()
-            break
-        except:
-            print("Server Offline")
 
-    main()
+    
 
 
 def redraw_gameWindow(win, bo, p1, p2, color, ready):
@@ -154,7 +162,12 @@ def main():
             count += 1
         clock.tick(30)
 
-        redraw_gameWindow(win, bo, p1Time, p2Time, color, bo.ready)
+        try:
+            redraw_gameWindow(win, bo, p1Time, p2Time, color, bo.ready)
+        except:
+            end_screen(win, "Other player left")
+            run = False
+            break
 
         if p1Time <= 0:
             bo = n.send("winner b")
