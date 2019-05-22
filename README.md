@@ -30,3 +30,5 @@ May 22 Livestream game install instructions:
 Known Bugs:
 - Checkmate does not work, if you loose or win you will need to end the game by hitting "q"
 - Very rare bug where a certain move will crash the game
+- No castling (no rooks swap with king), sorry :(
+- No Enpesant Pawn Rule
