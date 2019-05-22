@@ -251,7 +251,7 @@ def main():
                     bo = n.send("update moves")
                     i, j = click(pos)
                     bo = n.send("select " + str(i) + " " + str(j) + " " + color)
-    print("failed")
+    
     n.disconnect()
     bo = 0
     menu_screen(win)

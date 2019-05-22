@@ -69,7 +69,7 @@ def threaded_client(conn, game, spec=False):
                 break
 
             try:
-                d = conn.recv(8192 * 2)
+                d = conn.recv(8192 * 3)
                 data = d.decode("utf-8")
                 if not d:
                     break
@@ -112,7 +112,7 @@ def threaded_client(conn, game, spec=False):
                 conn.sendall(sendData)
 
             except Exception as e:
-                #print(e)
+                print(e)
         
         connections -= 1
         try:
@@ -169,24 +169,32 @@ def threaded_client(conn, game, spec=False):
 
 while True:
     read_specs()
-    conn, addr = s.accept()
-    spec = False
+    if connections < 6:
+        conn, addr = s.accept()
+        spec = False
+        g = -1
+        print("[CONNECT] New connection")
 
-    print("[CONNECT] Connected to: ", addr)
+        for game in games.keys():
+            if games[game].ready == False:
+                g=game
 
-    if connections %2 ==0:
-        games[connections//2] = Board(8,8)
+        if g == -1:
+            try:
+                g = list(games.keys())[-1]+1
+                games[g] = Board(8,8)
+            except:
+                g = 0
+                games[g] = Board(8,8)
 
-    g = len(games)-1
+        '''if addr[0] in spectartor_ids and specs == 0:
+            spec = True
+            print("[SPECTATOR DATA] Games to view: ")
+            print("[SPECTATOR DATA]", games.keys())
+            g = 0
+            specs += 1'''
 
-    if addr[0] in spectartor_ids and specs == 0:
-        spec = True
-        print("[SPECTATOR DATA] Games to view: ")
-        print("[SPECTATOR DATA]", games.keys())
-        g = 0
-        specs += 1
+        print("[DATA] Number of Connections:", connections+1)
+        print("[DATA] Number of Games:", len(games))
 
-    print("[DATA] Number of Connections:", connections+1)
-    print("[DATA] Number of Games:", len(games))
-
-    start_new_thread(threaded_client, (conn,g,spec))
+        start_new_thread(threaded_client, (conn,g,spec))

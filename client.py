@@ -1,6 +1,6 @@
 import socket
 import pickle
-
+import time
 
 class Network:
     def __init__(self):
@@ -13,7 +13,7 @@ class Network:
 
     def connect(self):
         self.client.connect(self.addr)
-        return self.client.recv(4096*4)
+        return self.client.recv(4096*8)
 
     def disconnect(self):
         self.client.close()
@@ -23,20 +23,23 @@ class Network:
         :param data: str
         :return: str
         """
-        try:
-            if pick:
-                self.client.send(pickle.dumps(data))
-            else:
-                self.client.send(str.encode(data))
-            reply = self.client.recv(4096*4)
+        start_time = time.time()
+        while time.time() - start_time():
             try:
-                reply = pickle.loads(reply)
-            except Exception as e:
-                print(e)
+                if pick:
+                    self.client.send(pickle.dumps(data))
+                else:
+                    self.client.send(str.encode(data))
+                reply = self.client.recv(4096*8)
+                try:
+                    reply = pickle.loads(reply)
 
-            return reply
-        except socket.error as e:
-            print(e)
+                except Exception as e:
+                    print(e)
+
+                return reply
+            except socket.error as e:
+                print(e)
 
 
 
