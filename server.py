@@ -25,6 +25,7 @@ connections = 0
 games = {0:Board(8, 8)}
 
 spectartor_ids = [] 
+specs = 0
 
 def read_specs():
     global spectartor_ids
@@ -154,6 +155,7 @@ def threaded_client(conn, game, spec=False):
                 print(e)
 
         print("[DISCONNECT] Spectator left game", game)
+        specs -= 1
         conn.close()
 
 
@@ -169,11 +171,12 @@ while True:
 
     g = len(games)-1
 
-    if addr[0] in spectartor_ids:
+    if addr[0] in spectartor_ids and specs == 0:
         spec = True
         print("[SPECTATOR DATA] Games to view: ")
         print("[SPECTATOR DATA]", games.keys())
         g = 0
+        specs += 1
 
     print("[DATA] Number of Connections:", connections+1)
     print("[DATA] Number of Games:", len(games))
