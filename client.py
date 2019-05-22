@@ -33,13 +33,14 @@ class Network:
                 reply = self.client.recv(4096*8)
                 try:
                     reply = pickle.loads(reply)
-
+                    break
                 except Exception as e:
                     print(e)
 
-                return reply
             except socket.error as e:
                 print(e)
 
+
+        return reply
 
 
