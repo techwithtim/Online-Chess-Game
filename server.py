@@ -68,51 +68,51 @@ def threaded_client(conn, game, spec=False):
             if game not in games:
                 break
 
-            try:
-                d = conn.recv(8192 * 2)
-                data = d.decode("utf-8")
-                if not d:
-                    break
-                else:
-                    if data.count("select") > 0:
-                        all = data.split(" ")
-                        col = int(all[1])
-                        row = int(all[2])
-                        color = all[3]
-                        bo.select(col, row, color)
+            #try:
+            d = conn.recv(8192 * 2)
+            data = d.decode("utf-8")
+            if not d:
+                break
+            else:
+                if data.count("select") > 0:
+                    all = data.split(" ")
+                    col = int(all[1])
+                    row = int(all[2])
+                    color = all[3]
+                    bo.select(col, row, color)
 
-                    if data == "winner b":
-                        bo.winner = "b"
-                        print("[GAME] Player b won in game", game)
-                    if data == "winner w":
-                        bo.winner = "w"
-                        print("[GAME] Player w won in game", game)
+                if data == "winner b":
+                    bo.winner = "b"
+                    print("[GAME] Player b won in game", game)
+                if data == "winner w":
+                    bo.winner = "w"
+                    print("[GAME] Player w won in game", game)
 
-                    if data == "update moves":
-                        bo.update_moves()
+                if data == "update moves":
+                    bo.update_moves()
 
-                    if data.count("name") == 1:
-                        name = data.split(" ")[1]
-                        if currentId == "b":
-                            bo.p2Name = name
-                        elif currentId == "w":
-                            bo.p1Name = name
+                if data.count("name") == 1:
+                    name = data.split(" ")[1]
+                    if currentId == "b":
+                        bo.p2Name = name
+                    elif currentId == "w":
+                        bo.p1Name = name
 
-                    #print("Recieved board from", currentId, "in game", game)
+                #print("Recieved board from", currentId, "in game", game)
 
-                    if bo.ready:
-                        if bo.turn == "w":
-                            bo.time1 = 900 - (time.time() - bo.startTime) - bo.storedTime1
-                        else:
-                            bo.time2 = 900 - (time.time() - bo.startTime) - bo.storedTime2
+                if bo.ready:
+                    if bo.turn == "w":
+                        bo.time1 = 900 - (time.time() - bo.startTime) - bo.storedTime1
+                    else:
+                        bo.time2 = 900 - (time.time() - bo.startTime) - bo.storedTime2
 
-                    sendData = pickle.dumps(bo)
-                    #print("Sending board to player", currentId, "in game", game)
+                sendData = pickle.dumps(bo)
+                #print("Sending board to player", currentId, "in game", game)
 
-                conn.sendall(sendData)
+            conn.sendall(sendData)
 
-            except Exception as e:
-                print(e)
+            #except Exception as e:
+                #print(e)
         
         connections -= 1
         try:
