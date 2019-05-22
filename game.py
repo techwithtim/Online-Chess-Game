@@ -6,27 +6,24 @@ import pickle
 pygame.font.init()
 
 board = pygame.transform.scale(pygame.image.load(os.path.join("img","board_alt.png")), (750, 750))
+chessbg = pygame.image.load(os.path.join("img", "chessbg.png"))
 rect = (113,113,525,525)
 
 turn = "w"
 
 
-def menu_screen(win):
-    global bo
+def menu_screen(win, name):
+    global bo, chessbg
     run = True
     offline = False
 
     while run:
-        win.fill((128,128,128))
-        font = pygame.font.SysFont("comicsans", 80)
+        win.blit(chessbg, (0,0))
         small_font = pygame.font.SysFont("comicsans", 50)
-        title = font.render("Online Chess!", 1, (0,200,0))
-        join = font.render("Click To Join a Game!", 1, (0, 128, 0))
-        win.blit(title, (width/2 - title.get_width()/2, 200))
-        win.blit(join, (width / 2 - join.get_width() / 2, 400))
+        
         if offline:
             off = small_font.render("Server Offline, Try Again Later...", 1, (255, 0, 0))
-            win.blit(off, (width / 2 - off.get_width() / 2, 600))
+            win.blit(off, (width / 2 - off.get_width() / 2, 500))
 
         pygame.display.update()
 
@@ -42,8 +39,8 @@ def menu_screen(win):
                     run = False
                     main()
                     break
-                except Exception as e:
-                    print(e)
+                except:
+                    print("Server Offline")
                     offline = True
 
 
@@ -155,31 +152,33 @@ def main():
     run = True
 
     while run:
-        p1Time = bo.time1
-        p2Time = bo.time2
-        if count == 30:
-            bo = n.send("get")
-            count = 0
-        else:
-            count += 1
-        clock.tick(30)
+        if not color == "s":
+            p1Time = bo.time1
+            p2Time = bo.time2
+            if count == 30:
+                bo = n.send("get")
+                count = 0
+            else:
+                count += 1
+            clock.tick(30)
 
-        #try:
-        redraw_gameWindow(win, bo, p1Time, p2Time, color, bo.ready)
-        #except:
-            #end_screen(win, "Other player left")
-            #run = False
-            #break
+        try:
+            redraw_gameWindow(win, bo, p1Time, p2Time, color, bo.ready)
+        except:
+            end_screen(win, "Other player left")
+            run = False
+            break
 
-        if p1Time <= 0:
-            bo = n.send("winner b")
-        elif p2Time <= 0:
-            bo = n.send("winner w")
+        if not color == "s":
+            if p1Time <= 0:
+                bo = n.send("winner b")
+            elif p2Time <= 0:
+                bo = n.send("winner w")
 
-        if bo.check_mate("b"):
-            bo = n.send("winner b")
-        elif bo.check_mate("w"):
-            bo = n.send("winner w")
+            if bo.check_mate("b"):
+                bo = n.send("winner b")
+            elif bo.check_mate("w"):
+                bo = n.send("winner w")
 
         if bo.winner == "w":
             end_screen(win, "White is the Winner!")
@@ -221,8 +220,9 @@ def main():
     menu_screen(win)
 
 
+name = input("Please type your name: ")
 width = 750
 height = 750
 win = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Chess Game")
-menu_screen(win)
+menu_screen(win, name)
