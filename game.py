@@ -42,14 +42,12 @@ def menu_screen(win):
                     run = False
                     main()
                     break
-                except:
-                    print("Server Offline")
+                except Exception as e:
+                    print(e)
                     offline = True
 
 
     
-
-
 def redraw_gameWindow(win, bo, p1, p2, color, ready):
     win.blit(board, (0, 0))
     bo.draw(win, color)
@@ -75,24 +73,28 @@ def redraw_gameWindow(win, bo, p1, p2, color, ready):
         win.blit(txt3, (width/2-txt3.get_width()/2, 10))
 
     if not ready:
+        show = "Waiting for Player"
+        if color == "s":
+            show = "Waiting for Players"
         font = pygame.font.SysFont("comicsans", 80)
-        txt = font.render("Waiting for Player", 1, (255, 0, 0))
+        txt = font.render(show, 1, (255, 0, 0))
         win.blit(txt, (width/2 - txt.get_width()/2, 300))
 
-    font = pygame.font.SysFont("comicsans", 30)
-    if color == "w":
-        txt3 = font.render("YOU ARE WHITE", 1, (255, 0, 0))
-        win.blit(txt3, (width / 2 - txt3.get_width() / 2, 10))
-    else:
-        txt3 = font.render("YOU ARE BLACK", 1, (255, 0, 0))
-        win.blit(txt3, (width / 2 - txt3.get_width() / 2, 10))
+    if not color == "s":
+        font = pygame.font.SysFont("comicsans", 30)
+        if color == "w":
+            txt3 = font.render("YOU ARE WHITE", 1, (255, 0, 0))
+            win.blit(txt3, (width / 2 - txt3.get_width() / 2, 10))
+        else:
+            txt3 = font.render("YOU ARE BLACK", 1, (255, 0, 0))
+            win.blit(txt3, (width / 2 - txt3.get_width() / 2, 10))
 
-    if bo.turn == color:
-        txt3 = font.render("YOUR TURN", 1, (255, 0, 0))
-        win.blit(txt3, (width / 2 - txt3.get_width() / 2, 700))
-    else:
-        txt3 = font.render("THEIR TURN", 1, (255, 0, 0))
-        win.blit(txt3, (width / 2 - txt3.get_width() / 2, 700))
+        if bo.turn == color:
+            txt3 = font.render("YOUR TURN", 1, (255, 0, 0))
+            win.blit(txt3, (width / 2 - txt3.get_width() / 2, 700))
+        else:
+            txt3 = font.render("THEIR TURN", 1, (255, 0, 0))
+            win.blit(txt3, (width / 2 - txt3.get_width() / 2, 700))
 
     pygame.display.update()
 
@@ -162,12 +164,12 @@ def main():
             count += 1
         clock.tick(30)
 
-        try:
-            redraw_gameWindow(win, bo, p1Time, p2Time, color, bo.ready)
-        except:
-            end_screen(win, "Other player left")
-            run = False
-            break
+        #try:
+        redraw_gameWindow(win, bo, p1Time, p2Time, color, bo.ready)
+        #except:
+            #end_screen(win, "Other player left")
+            #run = False
+            #break
 
         if p1Time <= 0:
             bo = n.send("winner b")
@@ -199,6 +201,13 @@ def main():
                         bo = n.send("winner b")
                     else:
                         bo = n.send("winner w")
+
+                if event.key == pygame.K_RIGHT:
+                    bo = n.send("forward")
+
+                if event.key == pygame.K_LEFT:
+                    bo = n.send("back")
+
 
             if event.type == pygame.MOUSEBUTTONUP and color != "s":
                 if color == bo.turn and bo.ready:
