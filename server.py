@@ -41,9 +41,10 @@ def read_specs():
 
 
 def threaded_client(conn, game, spec=False):
-    global pos, games, currentId, connections
+    global pos, games, currentId, connections, specs
 
     if not spec:
+        name = None
         bo = games[game]
 
         if connections % 2 == 0:
@@ -90,6 +91,13 @@ def threaded_client(conn, game, spec=False):
                     if data == "update moves":
                         bo.update_moves()
 
+                    if data.count("name") == 1:
+                        name = data.split(" ")[1]
+                        if currentId == "b":
+                            bo.p2Name = name
+                        elif currentId == "w":
+                            bo.p1Name = name
+
                     #print("Recieved board from", currentId, "in game", game)
 
                     if bo.ready:
@@ -112,7 +120,7 @@ def threaded_client(conn, game, spec=False):
             print("[GAME] Game", game, "ended")
         except:
             pass
-        print("[DISCONNECT] Player left game", game)
+        print("[DISCONNECT] Player", name, "left game", game)
         conn.close()
 
     else:

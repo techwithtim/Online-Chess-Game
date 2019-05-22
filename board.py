@@ -60,6 +60,9 @@ class Board:
         self.board[6][6] = Pawn(6, 6, "w")
         self.board[6][7] = Pawn(6, 7, "w")
 
+        self.p1Name = "Player 1"
+        self.p2Name = "Player 2"
+
         self.turn = "w"
 
         self.time1 = 900

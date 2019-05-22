@@ -89,10 +89,13 @@ def redraw_gameWindow(win, bo, p1, p2, color, ready):
         formatTime2 = formatTime2[:-1] + "0" + formatTime2[-1]
 
     font = pygame.font.SysFont("comicsans", 30)
-    txt = font.render("Player 2 Time: " + str(formatTime2), 1, (255, 255, 255))
-    txt2 = font.render("Player 1 Time: " + str(formatTime1), 1, (255,255,255))
-    win.blit(txt, (540,10))
-    win.blit(txt2, (540, 700))
+    try:
+        txt = font.render(bo.p1Name + "\'s Time: " + str(formatTime2), 1, (255, 255, 255))
+        txt2 = font.render(bo.p2Name + "\'s Time: " + str(formatTime1), 1, (255,255,255))
+    except Exception as e:
+        print(e)
+    win.blit(txt, (520,10))
+    win.blit(txt2, (520, 700))
 
     txt = font.render("Press q to Quit", 1, (255, 255, 255))
     win.blit(txt, (10, 20))
@@ -174,12 +177,13 @@ def connect():
 
 
 def main():
-    global turn, bo
+    global turn, bo, name
 
     color = bo.start_user
     count = 0
 
     bo = n.send("update_moves")
+    bo = n.send("name " + name)
     clock = pygame.time.Clock()
     run = True
 
@@ -196,7 +200,8 @@ def main():
 
         try:
             redraw_gameWindow(win, bo, p1Time, p2Time, color, bo.ready)
-        except:
+        except Exception as e:
+            print(e)
             end_screen(win, "Other player left")
             run = False
             break
