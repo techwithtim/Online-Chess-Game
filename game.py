@@ -191,7 +191,7 @@ def main():
         if not color == "s":
             p1Time = bo.time1
             p2Time = bo.time2
-            if count == 30:
+            if count == 60:
                 bo = n.send("get")
                 count = 0
             else:
