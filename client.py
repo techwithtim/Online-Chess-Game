@@ -24,7 +24,7 @@ class Network:
         :return: str
         """
         start_time = time.time()
-        while time.time() - start_time():
+        while time.time() - start_time() < 5:
             try:
                 if pick:
                     self.client.send(pickle.dumps(data))
