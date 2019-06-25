@@ -28,7 +28,7 @@ If you intened to use any of my code for commercial use please contact me and ge
 
 # Run in Gitpod
 
-You can also run Snake-Game in Gitpod, a free online dev environment for GitHub:
+You can also run Online Chess Game in Gitpod, a free online dev environment for GitHub:
 
 If you're intersted in a paid subscription with GitPod use the coupon code: **TECHWITHTIM2FQBMX**
 
