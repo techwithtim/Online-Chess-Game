@@ -7,16 +7,6 @@ Description: An online multiplayer chess game. Supports infinite players playing
 - pygame
 
 
-# May 22 Livestream game install instructions:
-- Install python 3.x and pygame on your machine (Windows: https://www.youtube.com/watch?v=AdUZArA-kZw , MAC: https://www.youtube.com/watch?v=E-WhAS6qzsU)
-- Dowload this repo to your machine
-- Run the game.py python file
-- Click anywhere in the pygame window to queue for a game
-- Wait for a player to join your game and the game will begin
-- If you wish to leave just close the window or hit q
-- After a game is finished you will be brought back to the main menu where you can queue again
-
-
 # TO MAKE THIS CODE WORK...
 *Ignore this if you are here from the livestream.*
 You will need to change the server address from within the following two files:
