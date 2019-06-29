@@ -1,3 +1,9 @@
+'''
+the main game
+author:@techwithtim
+requirements:see requirements.txt
+'''
+
 import subprocess
 import sys
 import get_pip
