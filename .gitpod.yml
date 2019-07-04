@@ -1,5 +1,7 @@
 image: gitpod/workspace-full-vnc
 ports:
+  - port: 5555
+    onOpen: ignore
   - port: 5900
     onOpen: ignore
   - port: 6080
@@ -7,4 +9,7 @@ ports:
 tasks:
   - init: pip3 install -r requirements.txt
     command: python3 server.py
-  - command: python3 game.py
+    name: Server
+  - command: gp await-port 5555 && python3 game.py
+    openMode: split-right
+    name: Client
