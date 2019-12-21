@@ -29,6 +29,6 @@ If you intened to use any of my code for commercial use please contact me and ge
 
 You can also run Online Chess Game in Gitpod, a free online dev environment for GitHub:
 
-If you're intersted in a paid subscription with GitPod use the coupon code: **TECHWITHTIM2FQBMX**
+If you're intersted in a paid subscription with GitPod use the coupon code: **TECHWITHTIM19**
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/techwithtim/Online-Chess-Game/blob/master/client.py)
