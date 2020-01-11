@@ -16,7 +16,7 @@ You will also need to run server.py on some kind of server. After that you can l
 
 
 # Known Bugs:
-- Checkmate does not work, if you loose or win you will need to end the game by hitting "q"
+- Checkmate does not work, if you lose or win you will need to end the game by hitting "q"
 - Very rare bug where a certain move will crash the game
 - No Enpesant Pawn Rule
 
