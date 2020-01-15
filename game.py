@@ -43,6 +43,7 @@ from client import Network
 import pickle
 pygame.font.init()
 
+icon = pygame.image.load(os.path.join("img", "chessicon.png"))
 board = pygame.transform.scale(pygame.image.load(os.path.join("img","board_alt.png")), (750, 750))
 chessbg = pygame.image.load(os.path.join("img", "chessbg.png"))
 rect = (113,113,525,525)
@@ -268,4 +269,5 @@ width = 750
 height = 750
 win = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Chess Game")
+pygame.display.set_icon(icon)
 menu_screen(win, name)
