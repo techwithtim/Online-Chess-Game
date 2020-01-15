@@ -32,3 +32,9 @@ You can also run Online Chess Game in Gitpod, a free online dev environment for 
 If you're intersted in a paid subscription with GitPod use the coupon code: **TECHWITHTIM19**
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/techwithtim/Online-Chess-Game/blob/master/client.py)
+
+# Translation
+
+You can use other language to Online Chess Game!
+
+Just replace the original game.py, that exists in other languages, with the game.py inside "translation" folder.
