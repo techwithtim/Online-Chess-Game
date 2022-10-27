@@ -21,8 +21,3 @@ You will also need to run server.py on some kind of server. After that you can l
 - Checkmate does not work, if you loose or win you will need to end the game by hitting "q"
 - Very rare bug where a certain move will crash the game
 - No Enpesant Pawn Rule
-
-# LICENSE:
-
-_NOT FOR COMMERCIAL USE_
-If you intened to use any of my code for commercial use please contact me and get my permission. If you intend to make money using any of my code please ask my permission.
