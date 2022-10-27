@@ -1,10 +1,4 @@
 import pygame
-import subprocess
-import sys
-import get_pip
-
-
-import pygame
 import os
 import time
 from client import Network
