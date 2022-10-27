@@ -125,9 +125,7 @@ def end_screen(win, text):
 
 
 def click(pos):
-    """
-    :return: pos (x, y) in range 0-7 0-7
-    """
+
     x = pos[0]
     y = pos[1]
     if rect[0] < x < rect[0] + rect[2]:
