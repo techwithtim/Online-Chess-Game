@@ -2,6 +2,7 @@ import socket
 import pickle
 import time
 
+
 class Network:
     def __init__(self):
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -19,10 +20,7 @@ class Network:
         self.client.close()
 
     def send(self, data, pick=False):
-        """
-        :param data: str
-        :return: str
-        """
+
         start_time = time.time()
         while time.time() - start_time < 5:
             try:
@@ -40,7 +38,4 @@ class Network:
             except socket.error as e:
                 print(e)
 
-
         return reply
-
-
