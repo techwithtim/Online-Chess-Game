@@ -29,19 +29,6 @@ spectartor_ids = []
 specs = 0
 
 
-def read_specs():
-    global spectartor_ids
-
-    spectartor_ids = []
-    try:
-        with open("specs.txt", "r") as f:
-            for line in f:
-                spectartor_ids.append(line.strip())
-    except:
-        print("[ERROR] No specs.txt file found, creating one...")
-        open("specs.txt", "w")
-
-
 def threaded_client(conn, game, spec=False):
     global pos, games, currentId, connections, specs
 
