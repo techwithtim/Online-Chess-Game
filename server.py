@@ -7,6 +7,7 @@ import time
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 server = "localhost"
+# server = "192.168.8.60"
 port = 5555
 
 server_ip = socket.gethostbyname(server)
@@ -22,10 +23,11 @@ print("[START] Waiting for a connection")
 
 connections = 0
 
-games = {0:Board(8, 8)}
+games = {0: Board(8, 8)}
 
-spectartor_ids = [] 
+spectartor_ids = []
 specs = 0
+
 
 def read_specs():
     global spectartor_ids
@@ -102,9 +104,11 @@ def threaded_client(conn, game, spec=False):
 
                     if bo.ready:
                         if bo.turn == "w":
-                            bo.time1 = 900 - (time.time() - bo.startTime) - bo.storedTime1
+                            bo.time1 = 900 - \
+                                (time.time() - bo.startTime) - bo.storedTime1
                         else:
-                            bo.time2 = 900 - (time.time() - bo.startTime) - bo.storedTime2
+                            bo.time2 = 900 - \
+                                (time.time() - bo.startTime) - bo.storedTime2
 
                     sendData = pickle.dumps(bo)
                     #print("Sending board to player", currentId, "in game", game)
@@ -113,7 +117,7 @@ def threaded_client(conn, game, spec=False):
 
             except Exception as e:
                 print(e)
-        
+
         connections -= 1
         try:
             del games[game]
@@ -150,7 +154,7 @@ def threaded_client(conn, game, spec=False):
                             print("[SPECTATOR] Moved Games back")
                             game_ind -= 1
                             if game_ind < 0:
-                                game_ind = len(available_games) -1
+                                game_ind = len(available_games) - 1
 
                         bo = games[available_games[game_ind]]
                     except:
@@ -177,15 +181,15 @@ while True:
 
         for game in games.keys():
             if games[game].ready == False:
-                g=game
+                g = game
 
         if g == -1:
             try:
                 g = list(games.keys())[-1]+1
-                games[g] = Board(8,8)
+                games[g] = Board(8, 8)
             except:
                 g = 0
-                games[g] = Board(8,8)
+                games[g] = Board(8, 8)
 
         '''if addr[0] in spectartor_ids and specs == 0:
             spec = True
@@ -197,4 +201,4 @@ while True:
         print("[DATA] Number of Connections:", connections+1)
         print("[DATA] Number of Games:", len(games))
 
-        start_new_thread(threaded_client, (conn,g,spec))
+        start_new_thread(threaded_client, (conn, g, spec))
