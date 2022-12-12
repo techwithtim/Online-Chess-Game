@@ -40,7 +40,4 @@ class Network:
             except socket.error as e:
                 print(e)
 
-
         return reply
-
-
