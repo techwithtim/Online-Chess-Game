@@ -34,8 +34,7 @@ except:
             print("[GAME] Pygame has been installed")
         except:
             print("[ERROR 1] Pygame could not be installed")
-
-
+            
 import pygame
 import os
 import time
@@ -48,7 +47,6 @@ chessbg = pygame.image.load(os.path.join("img", "chessbg.png"))
 rect = (113,113,525,525)
 
 turn = "w"
-
 
 def menu_screen(win, name):
     global bo, chessbg
@@ -80,8 +78,6 @@ def menu_screen(win, name):
                 except:
                     print("Server Offline")
                     offline = True
-
-
     
 def redraw_gameWindow(win, bo, p1, p2, color, ready):
     win.blit(board, (0, 0))
@@ -136,7 +132,6 @@ def redraw_gameWindow(win, bo, p1, p2, color, ready):
 
     pygame.display.update()
 
-
 def end_screen(win, text):
     pygame.font.init()
     font = pygame.font.SysFont("comicsans", 80)
@@ -157,7 +152,6 @@ def end_screen(win, text):
                 run = False
             elif event.type == pygame.USEREVENT+1:
                 run = False
-
 
 def click(pos):
     """
@@ -180,7 +174,6 @@ def connect():
     global n
     n = Network()
     return n.board
-
 
 def main():
     global turn, bo, name
@@ -261,7 +254,6 @@ def main():
     n.disconnect()
     bo = 0
     menu_screen(win)
-
 
 name = input("Please type your name: ")
 width = 750
